@@ -5,7 +5,7 @@
 
 <div class="container">
    <form class="was-validated" >
-     
+     <input type="hidden" id = "userId" value="${sessionScope.principal.id}"/>
      <div class="form-group">
        <label for="title">title:</label>
        <input id="title" type="text" class="form-control" placeholder="Enter username" required>
@@ -13,7 +13,7 @@
      
      <div class="form-group">
        <label for="content">Content:</label>
-       <textarea id = "content"rows="10" cols="50" class="form-control"></textarea>
+       <textarea id = "content" rows="10" cols="50" class="form-control"></textarea>
      </div>
 
      <button id="btn-save" type="button" class="btn btn-primary">글쓰기</button>

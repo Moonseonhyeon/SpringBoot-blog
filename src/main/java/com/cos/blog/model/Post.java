@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class Post {
 	private int id;
 	private String title;
-	private String context;
+	private String content;
 	private int userId;
 	private Timestamp createDate;
 }
