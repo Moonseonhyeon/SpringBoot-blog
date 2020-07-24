@@ -43,6 +43,7 @@ CREATE TABLE user(
     password varchar(100) not null,
     email varchar(100),
     profile varchar(200),
+    role varchar(100),
     createDate timestamp
 ) engine=InnoDB default charset=utf8;
 ```
@@ -68,4 +69,16 @@ CREATE TABLE comment(
     foreign key (userId) references user (id) on delete set null,
     foreign key (postId) references post (id) on delete cascade
 ) engine=InnoDB default charset=utf8;
+```
+
+```sql
+drop table comment;
+drop table post;
+drop table user;
+```
+
+```sql
+update user set role ='ROLE_ADMIN' where username='root';
+
+commit;
 ```
