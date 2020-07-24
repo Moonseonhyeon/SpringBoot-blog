@@ -18,7 +18,9 @@ public class WebConfig implements WebMvcConfigurer{
 	@Override
 	public void addInterceptors(InterceptorRegistry registry) {
 		registry.addInterceptor(new SessionIntercepter())
-		.addPathPatterns("/user/**");
+		.addPathPatterns("/user/**")
+		.addPathPatterns("/post/**")//로그인 안하면 글 아무것도 못 보게 할거다.
+		.addPathPatterns("/post**");
 		
 		registry.addInterceptor(new RoleIntercepter())
 		.addPathPatterns("/admin/**");
