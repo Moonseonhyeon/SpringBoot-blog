@@ -23,6 +23,10 @@
 		WHERE p.id = #{id} 
 	</select>
 	
+	<select id="findOne" resultType="com.cos.blog.model.Post">
+		SELECT * FROM post WHERE id = #{id} 
+	</select>
+	
 	<delete id="delete">
 	DELETE FROM post WHERE id =#{id}
 	</delete>

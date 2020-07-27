@@ -2,6 +2,8 @@ package com.cos.blog.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -12,8 +14,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cos.blog.config.handler.exception.MyRoleException;
 import com.cos.blog.controller.dto.CommonRespDto;
 import com.cos.blog.model.Post;
+import com.cos.blog.model.User;
+import com.cos.blog.repository.PostRepository;
+import com.cos.blog.repository.UserRepository;
 import com.cos.blog.service.PostService;
 
 
@@ -24,6 +30,7 @@ import lombok.RequiredArgsConstructor;
 public class PostController {
 
 	private final PostService postService; // 이게 AutoWired다!
+	private final PostRepository postRepository;
 
 	/*
 	 * public PostController(PostService postService) { this.postService =
@@ -58,7 +65,14 @@ public class PostController {
 	}
 	
 	@DeleteMapping("/post/{id}")
-	public @ResponseBody CommonRespDto<?> deleteById(@PathVariable int id) {
+	public @ResponseBody CommonRespDto<?> deleteById(@PathVariable int id, HttpSession session) throws MyRoleException {
+		//세션 값 확인, 글의 주인
+		Post postEntity = postRepository.findOne(id);
+		User principal = (User)session.getAttribute("principal");
+		if(principal.getId() != postEntity.getUserId()) {
+			throw new MyRoleException();
+			/* return new CommonRespDto<String>(-1, "권한이 없습니다."); */
+							}
 		postService.삭제하기(id);
 		return new CommonRespDto<String>(1, "삭제 성공");
 	}
